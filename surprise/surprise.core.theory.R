@@ -1,3 +1,4 @@
+#the core of surprise theory
 #define the range of scan 
 range <-c(0,30);
 
