@@ -15,11 +15,11 @@ my %special_words_table;
 
 
 #set the sample cases directory
-my $dirname = "/home/zhihan/Desktop/surprise/results/";
+my $dirname = "./result/";
 #my $dirname = "/home/ogre/Desktop/web_lscp/data/lda_input_expected_results2/";
 
 #set the output results directory path
-my $output_dir = "/home/zhihan/surprise/output/";
+my $output_dir = "./result2/";
 
 #set the command
 my $my_command = "";
@@ -89,6 +89,9 @@ while ( $my_command ne "exit" ) {
 	}elsif($my_command eq "remove javascript")
 	{
 		&remove_javascript();
+	}elsif($my_command eq "remove css style")
+	{
+		&remove_css_style();
 	}
 	else {
 		&wait_command();
@@ -100,6 +103,59 @@ sub change_work_dir {
 	print("\ninput the new work directory:  ");
 	$my_command = <STDIN>;
 	print("\n $my_command");
+}
+
+sub remove_css_style {
+
+print("end");
+	#step1: open the directory which contains test suites
+	opendir( DIR, $dirname ) || die "Error in opening dir $dirname\n";
+
+	my $sub_dirname = "";
+	while ( $sub_dirname = readdir(DIR) ) {
+		if ( $sub_dirname ne ".." and $sub_dirname ne "." ) {
+
+			my $sub_dir_address = $dirname . $sub_dirname . "\/";
+
+			opendir( SUB_DIR, $sub_dir_address )
+			  || die "Error in opening dir $sub_dir_address\n";
+
+			#step2: get per file by while function
+			while ( ( $filename = readdir(SUB_DIR) ) ) {
+
+				if ( $filename ne ".." and $filename ne "." ) {
+					my $whole_file_name = $sub_dir_address . $filename;
+
+					open( FH, $whole_file_name )
+					  || ( die "can not open the file $whole_file_name\n" );
+					my $contents = <FH>;
+					#remove javascript
+					$contents =~ s/<style.*?\/style>//g;
+					print($contents);
+					
+					
+					close(FH);
+
+					unlink($whole_file_name);
+
+					open( OUT, ">>", $whole_file_name )
+					  || ( die "can not open the file $whole_file_name\n" );
+
+					
+					print OUT "$contents\n";
+					
+					close(OUT);
+				}
+
+			}
+
+			closedir(SUB_DIR);
+
+		}
+	}
+	closedir(DIR);
+	print("end");
+	
 }
 sub remove_javascript {
 
@@ -125,9 +181,9 @@ sub remove_javascript {
 					  || ( die "can not open the file $whole_file_name\n" );
 					my $contents = <FH>;
 					#remove javascript
-					$contents =~ s/<javascript.*\/javascript>//g;
-					$contents =~ s/<script.+\/script>//g;
-					print($contents);
+					$contents =~ s/<javascript.*?\/javascript>//g;
+					$contents =~ s/<script.+?\/script>//g;
+					#print($contents);
 					
 					
 					close(FH);
@@ -760,8 +816,9 @@ print(
 print(
 "#13:input \"remove spec words\" to remove special words from files\n"
 	);
-print("#14: :input \"remove label\" to remove labels from files\n");
+print("#14: input \"remove label\" to remove labels from files\n");
 print("#15: input \"remove javascript\" to remove javascript \n");
+print("#16: input \"remove css style\" to remove css from html");
 }
 
 #function    : process per file in the directory
