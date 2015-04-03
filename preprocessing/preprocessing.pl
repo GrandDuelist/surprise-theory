@@ -92,10 +92,32 @@ while ( $my_command ne "exit" ) {
 	}elsif($my_command eq "remove css style")
 	{
 		&remove_css_style();
-	}
-	else {
+	}elsif($my_command eq "auto surprise scissor")
+	{
+		&auto_surprise_scissor();
+	}else {
 		&wait_command();
 	}
+}
+
+sub auto_surprise_scissor{
+	#1. change to lower case
+	#2. remove css style
+	#3. remove javascript
+	#4. remove label
+	#5. remove url
+	#6. remove spec char
+	#7. stem word
+	#8. remove empty files
+	&change_to_lower_case__from_files();
+	&remove_css_style();
+	&remove_javascript();
+	&remove_label();
+	&remove_url_from_files();	
+	&remove_special_words_from_files();
+	&stem_words_in_files();
+	&remove_empty_file();
+
 }
 
 sub change_work_dir {
@@ -818,7 +840,8 @@ print(
 	);
 print("#14: input \"remove label\" to remove labels from files\n");
 print("#15: input \"remove javascript\" to remove javascript \n");
-print("#16: input \"remove css style\" to remove css from html");
+print("#16: input \"auto surprise scissor\" to process all steps for surprise preprocessing\n");
+print("#17: input \"remove css style\" to remove css from html\n");
 }
 
 #function    : process per file in the directory
@@ -1080,7 +1103,7 @@ sub build_stop_words_table {
 	  whither who whoever whole whom whose why will willing wish with within without wonder would would
 	  x y yes yet you your yours yourself yourselves z zero);
 
-	my @spec_char = qw(. , - + = _ ; : " ' / ( ) [ ] | ? ! \\);
+	my @spec_char = qw(. , - + = _ ; : " ' / ( ) [ ] | ? ! & \\);
 	
 	foreach my $word (@english) {
 		$english_stop_words_table{$word} = 1;
@@ -1153,7 +1176,7 @@ sub remove_special_characters {
 	my $str_out        = "";
 	my $number_removed = 0;
 
-	for my $w ( split /(\s|,|\.|\||-|\/|\(|\)|'|"|\[|\]|\?|!|:|\\)+/, $str_in )
+	for my $w ( split /(\s|,|\.|\||-|\/|\(|\)|'|"|\[|\]|\?|!|:|\\|\{|\}|;|‘|’)+/, $str_in )
 	{
 		if ( exists( $ref_spec_char->{$w} ) ) { ++$number_removed }
 		else {
