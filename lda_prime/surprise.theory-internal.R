@@ -3,7 +3,11 @@
 #source(tcp.lda.R);
 #source(surprise.core.theory.R);
 
-
+#shuffle the file order
+shuffle.theta <- function(theta){
+  result <- theta[sample(nrow(theta)),];
+  return(result);
+}
 #the surprise calculation
 #dArray sample
 calculate.surprise <- function(pre, nex, dataDis){
