@@ -19,6 +19,7 @@ calculate.surprise <- function(pre, nex, dataDis){
     
     for(i in 1:n){
       
+    
       temp[i]<- (1/n * pre[i])/(dataDis)
       
     #  print(temp[i])
@@ -27,7 +28,8 @@ calculate.surprise <- function(pre, nex, dataDis){
   #    print(temp2[i])
     
     #Computing suprise for each model
-    if(temp2[i]==0 || temp[i]==0){
+   
+    if((temp2[i]==0) || (temp[i]==0)){
       surprises[i]=0;
     }else{
       surprises[i] <- log(temp2[i]/temp[i], base = 2)
