@@ -15,12 +15,13 @@ calculate.hit.percentage <- function (fileOrder,baseNumber,keyWord){
 calculate.hit.percentage.average <- function(testDir,baseNumber,keyword,times,k){
   #初始化一个数组存放每次的命中率
   hits <- array(dim=times);
-  
+  print(baseNumber)
   #先计算lda
   for(i in 1:times){
     lda_result <- tcp.lda(testDir=testDir,K=k);
     surprise_result <- surprise.theory(lda_result$lda$theta);
     hits[i] <- calculate.hit.percentage(fileOrder=surprise_result$file_order,baseNumber=baseNumber,keyWord=keyword);
+    print(hits[i])
   }
   #计算平均值
   result <- mean(hits);
@@ -30,12 +31,12 @@ calculate.hit.percentage.average <- function(testDir,baseNumber,keyword,times,k)
 #分别计算前10 前50 前 100 前 200 前500 前1000的命中百分比
 calculate.hit.top <- function(testDir,keyWord,k,times){
    result <- new.env();
-   result$tpo10 <- calculate.hit.percentage.average(testDir=testDir,10,keyword=keyWord,times=times,k=k);
+   result$top10 <- calculate.hit.percentage.average(testDir=testDir,10,keyword=keyWord,times=times,k=k);
    result$top50 <- calculate.hit.percentage.average(testDir=testDir,50,keyword=keyWord,times=times,k=k);
- #  result$top100 <- calculate.hit.percentage.average(testDir=testDir,100,keyword=keyWord,times=times,k=k);
- #  result$top200 <- calculate.hit.percentage.average(testDir=testDir,200,keyword=keyWord,times=times,k=k);
- #  result$top500 <- calculate.hit.percentage.average(testDir=testDir,500,keyword=keyWord,times=times,k=k);
- #  result$top1000<- calculate.hit.percentage.average(testDir=testDir,1000,keyword=keyWord,times=times,k=k);
+   result$top100 <- calculate.hit.percentage.average(testDir=testDir,100,keyword=keyWord,times=times,k=k);
+   result$top200 <- calculate.hit.percentage.average(testDir=testDir,200,keyword=keyWord,times=times,k=k);
+   result$top500 <- calculate.hit.percentage.average(testDir=testDir,500,keyword=keyWord,times=times,k=k);
+   result$top1000<- calculate.hit.percentage.average(testDir=testDir,1000,keyword=keyWord,times=times,k=k);
    return(result);
 }
 
