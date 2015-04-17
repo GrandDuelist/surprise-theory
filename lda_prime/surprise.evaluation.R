@@ -6,7 +6,7 @@ source("surprise.evaluation-internal.R");
 
 surprise.evaluation <- function(testDir,k,keyWord,baseNumbers,times=100,multi=FALSE){
   if(!multi){
-      result <- output.result(testDir=testDir,times=times,keyWord=keyWord,k=k);
+      result <- output.result(testDir=testDir,times=times,baseNumbers=baseNumbers,keyWord=keyWord,k=k);
       return(result);
   }else{
       

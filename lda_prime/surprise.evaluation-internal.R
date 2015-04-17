@@ -16,7 +16,7 @@ calculate.hit.percentage.average <- function(testDir,baseNumbers,keyword,times,k
   #初始化一个数组存放每次的命中率
   n_baseNumbers = length(baseNumbers);
   hits <- matrix(nrow=n_baseNumbers,ncol=times);
-  print(baseNumber)
+ 
  
   #先计算lda
   for(i in 1:times){
@@ -25,6 +25,7 @@ calculate.hit.percentage.average <- function(testDir,baseNumbers,keyword,times,k
      #分别计算前10 50 100 个结果
     for(j in 1:n_baseNumbers){
       baseNumber = baseNumbers[j];
+      print(baseNumber);
       hits[j][i] <- calculate.hit.percentage(fileOrder=surprise_result$file_order,baseNumber=baseNumber,keyWord=keyword);
       
       print(hits[j][i])
