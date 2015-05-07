@@ -15,9 +15,19 @@ calculate.hit.percentage <- function (fileOrder,baseNumber,keyWord){
 calculate.hit.percentage.average <- function(testDir,baseNumbers,keyword,times,k){
   #初始化一个数组存放每次的命中率
   n_baseNumbers = length(baseNumbers);
-  hits <- matrix(nrow=n_baseNumbers,ncol=times);
  
- 
+  result = array(dim=n_baseNumbers);
+  row_name = array(dim=n_baseNumbers);
+  #col_name = array(dim=times);
+  for(i in 1:n_baseNumbers){
+    row_name[i] = paste("top",baseNumbers[i],sep="");
+  }
+  
+ # for(i in 1:times){
+  #  col_name = paste("iterate ",i,sep="");
+#  }
+  
+  hits <- matrix(nrow=n_baseNumbers,ncol=times,dimnames=list(row_name));
   #先计算lda
   for(i in 1:times){
     lda_result <- tcp.lda(testDir=testDir,K=k);
@@ -26,13 +36,14 @@ calculate.hit.percentage.average <- function(testDir,baseNumbers,keyword,times,k
     for(j in 1:n_baseNumbers){
       baseNumber = baseNumbers[j];
       print(baseNumber);
-      hits[j][i] <- calculate.hit.percentage(fileOrder=surprise_result$file_order,baseNumber=baseNumber,keyWord=keyword);
-      
-      print(hits[j][i])
-      #计算平均值
-      result[j] <- mean(hits[j]);
-    }
+      hits[j,i] <- calculate.hit.percentage(fileOrder=surprise_result$file_order,baseNumber=baseNumber,keyWord=keyword); 
+      hits[j,i] <- hits[j,i]/0.02;
+      print(hits)   
+ }
   }
+  for(j in 1:n_baseNumbers){
+	result[j]=mean(hits[j,]);
+	}
   
   return(result);
   }
