@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-use lib "/home/zhihan/perl5/lib/perl5";
+use lib "/usr/lib/perl5"
 use HTML::Obliterate qw(extirpate_html);
 use Spreadsheet::WriteExcel;
 use Lingua::Stem;

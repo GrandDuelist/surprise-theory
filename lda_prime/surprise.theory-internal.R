@@ -18,10 +18,7 @@ calculate.surprise <- function(pre, nex, dataDis){
     surprises <- array(dim=n);
     
     for(i in 1:n){
-      
-    
       temp[i]<- (1/n * pre[i])/(dataDis)
-      
     #  print(temp[i])
       temp2[i] <- (temp[i] * nex[i])/(dataDis)
     
@@ -73,18 +70,25 @@ get.all.surprise.internal <- function(result){
   
   for(i in 1:n_row){
     current_row <-result[i,] ;
-    
-  
-   left_row_average <- (sum_of_col -current_row )/(n_row-1);     #当列所有和减去当前行
-  
-    
+    left_row_average <- (sum_of_col -current_row )/(n_row-1);     #当列所有和减去当前行
     surprises[i] <- calculate.surprise(pre=left_row_average,nex=current_row,dataDis=1/n_row);  #计算surprise
-    
   }
   
   return (surprises)
 }
 
+get.all.surprise.internal.suprise_first <- function(result){
+  n_row = nrow(result);
+  n_col = ncol(result);
+  
+  current_row <- array(dim = n_col);
+  
+  for(i in 1:n_row){
+    current_row
+  }
+  
+  #分别计算surprise 
+}
 
 #get order of surprise
 get.surprise.order <- function(surprise_array){
@@ -115,7 +119,6 @@ get.surprise.order <- function(surprise_array){
   
  }
  
-  
   return (order)
 }
 
