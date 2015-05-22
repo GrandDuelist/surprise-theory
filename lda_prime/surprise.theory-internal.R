@@ -16,18 +16,28 @@ calculate.surprise <- function(pre, nex, dataDis){
     temp <- array(dim=n);  #1st time
     temp2 <- array(dim=n); #2nd time
     surprises <- array(dim=n);
+    zero_number <- 0
     
     for(i in 1:n){
-        temp[i]<- (1/n * pre[i])/(dataDis)
-        #  print(temp[i])
+        # prior belief * likelihood / possibility of instance D
+        
+        # 1. temp[i] stores calculated prior belief, (initial)prior belief: 1/n, likelihood: pre[i],
+        temp[i] <- (1/n * pre[i])/(dataDis)
+        
+        # 2. temp2[i] stores posterior belief with regard to the i th webpages
         temp2[i] <- (temp[i] * nex[i])/(dataDis)
         
-        #    print(temp2[i])
+        # print(temp2[i])
         
         #Computing suprise for each model
         
+        #---------------------------------------------------------------
+        #Doutbtful, if either prior or posterior belief becomes 0, this should be more surprising...
+        #---------------------------------------------------------------
+
         if((temp2[i]==0) || (temp[i]==0)){
             surprises[i]=0;
+            zero_number<- zero_number + 1
         }else{
             surprises[i] <- log(temp2[i]/temp[i], base = 2)
         }
@@ -38,8 +48,15 @@ calculate.surprise <- function(pre, nex, dataDis){
     {
         surprise <- temp2[i] * surprises[i]+surprise;
     }
-    return (surprise)
     
+    #---------------------------------------------------------------
+    # Here is to test how many 0 surprises this finally yields
+    #---------------------------------------------------------------
+
+    print("surprise array")
+    print(surprise)
+    print(paste("zero number---", zero_number))
+    return (surprise)
 }
 
 remove.nosensen <- function(theta){
@@ -60,16 +77,13 @@ get.all.surprise.internal <- function(result){
         sum_of_col[j] <- sum(result[,j]);   #计算每一列的和
     }
     
-    
-    
     left_row_average <- array(dim=n_col) #剩余行的均值
     current_row <- array(dim=n_col)  #当前处理的行
     
     surprises <- array(dim=n_row); #存放每个网页surprise值
     
-    
     for(i in 1:n_row){
-        current_row <-result[i,] ;
+        current_row <-result[i,];
         left_row_average <- (sum_of_col -current_row )/(n_row-1);     #当列所有和减去当前行
         surprises[i] <- calculate.surprise(pre=left_row_average,nex=current_row,dataDis=1/n_row);  #计算surprise
     }

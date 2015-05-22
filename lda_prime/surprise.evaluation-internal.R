@@ -35,11 +35,12 @@ calculate.hit.percentage.average <- function(testDir,baseNumbers,keyword,times,k
         #分别计算前10 50 100 个结果
         for(j in 1:n_baseNumbers){
             baseNumber = baseNumbers[j];
-            print(baseNumber);
+            #print(baseNumber);
             hits[j,i] <- calculate.hit.percentage(fileOrder=surprise_result$file_order,baseNumber=baseNumber,keyWord=keyword);
+            #divided by 0.02, Hard code....... need to be revised
             hits[j,i] <- hits[j,i]/0.02;
-            print(hits)
         }
+        print(hits)
     }
     for(j in 1:n_baseNumbers){
         result[j]=mean(hits[j,]);
