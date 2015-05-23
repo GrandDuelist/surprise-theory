@@ -1,6 +1,6 @@
 surprise.theory <- function(theta){
  
-result <- new.env();
+  result <- new.env();
   #result <- null;
   theta_shuffle <- shuffle.theta(theta);
   r <- remove.nosensen(theta_shuffle);
