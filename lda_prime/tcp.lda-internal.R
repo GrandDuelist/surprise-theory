@@ -12,7 +12,7 @@ library(bioDist)
 library(e1071)
 
 .computeTopics <-
-function(f, K=100, ITER=200, ALPHA=0.1, BETA=0.1){
+function(f, K=100, ITER=200, ALPHA= K/50, BETA=0.01){
     # Runs LDA (using tm package) on the given files)
     #
     # Args:
