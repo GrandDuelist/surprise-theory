@@ -30,7 +30,7 @@ calculate.surprise <- function(pre, nex, dataDis){
         # print(temp2[i])
         
         #Computing suprise for each model
-
+        
         if((temp2[i]==0) || (temp[i]==0)){
             surprises[i]=0;
         }else{
@@ -43,13 +43,7 @@ calculate.surprise <- function(pre, nex, dataDis){
     {
         surprise <- temp2[j] * surprises[j]+surprise;
     }
-    
-    #---------------------------------------------------------------
-    # Here is to test how many 0 surprises this finally yields
-    #---------------------------------------------------------------
 
-    print("surprise array")
-    print(surprise)
     return (surprise)
 }
 
@@ -90,21 +84,21 @@ get.all.surprise.internal.suprise_first <- function(result){
     n_col = ncol(result);
     
     current_row <- array(dim = n_col);
-  temp_surprises <- array(n_row-1); #存放计算的n-1个surprise值
-  surprises <- array(dim=n_row); #存放每个网页surprise值
+    temp_surprises <- array(n_row-1); #存放计算的n-1个surprise值
+    surprises <- array(dim=n_row); #存放每个网页surprise值
     for(i in 1:n_row){
-    current_row <- result[i,];    #当前处理的网页分布
-    for(j in 1:n_row){
-      pre_row <- result[j,];
-      if(j < i){
-        temp_surprises[j] = calculate.surprise(pre=pre_row,nex=current_row,dataDis=1/n_row); 
-      }else if(j > i){
-        temp_surprises[j-1] = calculate.surprise(pre=pre_row,nex=current_row,dataDis=1/n_row);
-      }
+        current_row <- result[i,];    #当前处理的网页分布
+        for(j in 1:n_row){
+            pre_row <- result[j,];
+            if(j < i){
+                temp_surprises[j] = calculate.surprise(pre=pre_row,nex=current_row,dataDis=1/n_row);
+            }else if(j > i){
+                temp_surprises[j-1] = calculate.surprise(pre=pre_row,nex=current_row,dataDis=1/n_row);
+            }
+        }
+        surprises[i] <- mean(temp_surprises);
     }
-    surprises[i] <- mean(temp_surprises);
-  }
-  return(surprises)
+    return(surprises)
     #分别计算surprise
 }
 

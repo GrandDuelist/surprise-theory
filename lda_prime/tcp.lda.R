@@ -8,8 +8,8 @@ tcp.lda <- function(
             truthName=NULL, # ground truth (fault matrix)
             K=20,   # LDA parameter number of topics
             iter=200,   # LDA parameter number of iterations
-            alpha=0.1,  # LDA parameter alpha
-            beta=0.1,  #LDA parameter beta                        
+            alpha=K/50,  # LDA parameter alpha
+            beta=0.01,  #LDA parameter beta
             distance="manhattan",  # distance measure to use (passed to dist())
             maximization="greedy", # max. algorithm to use (greedy or clustering)
             rerunLDA=FALSE, # Should we rerun LDA, if it's already been run?
