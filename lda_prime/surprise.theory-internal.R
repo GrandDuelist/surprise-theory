@@ -37,7 +37,6 @@ calculate.surprise <- function(pre, nex, dataDis){
 
         if((temp2[i]==0) || (temp[i]==0)){
             surprises[i]=0;
-            zero_number<- zero_number + 1
         }else{
             surprises[i] <- log(temp2[i]/temp[i], base = 2)
         }
@@ -46,7 +45,7 @@ calculate.surprise <- function(pre, nex, dataDis){
     surprise <- 0;
     for(j in 1:n)
     {
-        surprise <- temp2[i] * surprises[i]+surprise;
+        surprise <- temp2[j] * surprises[j]+surprise;
     }
     
     #---------------------------------------------------------------
@@ -55,7 +54,6 @@ calculate.surprise <- function(pre, nex, dataDis){
 
     print("surprise array")
     print(surprise)
-    print(paste("zero number---", zero_number))
     return (surprise)
 }
 
