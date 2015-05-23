@@ -30,10 +30,6 @@ calculate.surprise <- function(pre, nex, dataDis){
         # print(temp2[i])
         
         #Computing suprise for each model
-        
-        #---------------------------------------------------------------
-        #Doutbtful, if either prior or posterior belief becomes 0, this should be more surprising...
-        #---------------------------------------------------------------
 
         if((temp2[i]==0) || (temp[i]==0)){
             surprises[i]=0;
