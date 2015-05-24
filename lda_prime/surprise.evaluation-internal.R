@@ -38,7 +38,7 @@ calculate.hit.percentage.average <- function(testDir,baseNumbers,keyword,times,k
             #print(baseNumber);
             hits[j,i] <- calculate.hit.percentage(fileOrder=surprise_result$file_order,baseNumber=baseNumber,keyWord=keyword);
             #divided by 0.02, Hard code....... need to be revised
-            hits[j,i] <- hits[j,i]/0.02;
+            hits[j,i] <- hits[j,i];
         }
         print(hits)
     }

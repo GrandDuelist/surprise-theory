@@ -108,7 +108,6 @@ get.surprise.order <- function(surprise_array){
     order <- array(dim=n);
     not_in <- array(dim=n,data=1);
     
-    
     for(i in 1:n){
         
         for(a in 1:n){
